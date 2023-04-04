@@ -1,5 +1,6 @@
 const products = document.getElementById("products");
 const cartItems = document.getElementById("cartItems");
+let total = document.getElementById("totalAmout");
 
 //Display all products when the page loads
 window.addEventListener("DOMContentLoaded", () => {
@@ -24,27 +25,28 @@ window.addEventListener("DOMContentLoaded", () => {
         const addToCartBtn = li.querySelectorAll(".addToCart");
         addToCartBtn.forEach((btn) => {
           btn.addEventListener("click", () => {
-            const cartLi = document.createElement("li");
-            cartLi.innerHTML = `
+            const cartItem = document.createElement("div");
+            cartItem.innerHTML = `
             <div class="cartItemsContainer">
               <img src="${product.image}" id="cartItemImage">
-              <div class="itemDetails"
+              <div class="itemDetails">
                 <p>${product.title}</p> 
                 <p class="price">Price: ${product.price}</p>
               </div>
             </div>
             `;
-            cartItems.appendChild(cartLi);
-            const cartLiItems = cartLi.getElementsByTagName("li");
-            console.log(getTotal());
+            cartItems.appendChild(cartItem);
+            const cartItemsList =
+              cartItems.getElementsByClassName("cartItemsContainer");
+            total.textContent = getTotal();
 
             //function to calculate the total of the cart items
             function getTotal() {
               let total = 0;
-              for (let i = 0; i < cartLiItems.length; i++) {
-                const item = cartLiItems[i];
+              for (let i = 0; i < cartItemsList.length; i++) {
+                const item = cartItemsList[i];
                 const priceEl = item.querySelector(".price");
-                const price = parseInt(priceEl.textConten.split(":")[1]);
+                const price = parseInt(priceEl.textContent.split(":")[1]);
                 total += price;
               }
               return total;
