@@ -12,6 +12,10 @@ body {
   justify-content: center;
   flex-direction: column;
 }
+br {
+  display: block !important;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -39,6 +43,7 @@ title {
   width: 40%;
   background-color: antiquewhite;
   text-align: center;
+  position: relative;
 }
 #cHead {
   background-color: rgb(255, 205, 78);
@@ -47,13 +52,14 @@ title {
   border-radius: 5px;
   font-size: 20px;
 }
-#foot {
+.total {
   display: flex;
   margin: 10px;
   padding: 10px;
   justify-content: space-between;
   border-top: 2px solid black;
 }
+
 /* product styling */
 #products {
   display: grid;
@@ -89,4 +95,24 @@ title {
 .addToCart:hover {
   background-color: rgb(37, 37, 37);
   color: white;
+}
+
+/* Cart items styling */
+
+.cartItemsContainer {
+  display: flex;
+  width: 100%;
+  padding: 10px 30px;
+}
+.cartItemsContainer img {
+  max-width: 50px;
+  height: 50px;
+  border-radius: 70px;
+}
+.cartItemsContainer .itemDetails {
+  /* text-align: center; */
+  margin-left: 20px;
+}
+.cartItemsContainer .price {
+  color: rgb(133, 0, 0);
 }
