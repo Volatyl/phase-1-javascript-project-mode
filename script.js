@@ -1,6 +1,8 @@
 const products = document.getElementById("products");
 const cartItems = document.getElementById("cartItems");
 let total = document.getElementById("totalAmout");
+const searchKeyWord = document.getElementById("searchInput").value;
+const searchBtn = document.getElementById("searchButton");
 
 //Display all products when the page loads
 window.addEventListener("DOMContentLoaded", () => {
@@ -38,7 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
             cartItems.appendChild(cartItem);
             const cartItemsList =
               cartItems.getElementsByClassName("cartItemsContainer");
-            total.textContent = getTotal();
+            total.textContent = `Ksh: ${getTotal()}`;
 
             //function to calculate the total of the cart items
             function getTotal() {

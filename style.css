@@ -21,7 +21,7 @@ header {
   justify-content: space-between;
   font-size: 40px;
   background-color: rgb(255, 205, 78);
-  margin: 30px auto;
+  margin: 30px 10px auto;
   padding: 0 20px;
   width: 70%;
   text-align: center;
@@ -33,6 +33,10 @@ title {
   display: flex;
   width: 70%;
   gap: 20px;
+}
+.searchBar {
+  width: 70%;
+  margin: 10px auto 20px;
 }
 #productsContainer {
   width: 60%;
