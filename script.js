@@ -20,6 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
         `;
         products.appendChild(li);
 
+        //add items to cart
         const addToCartBtn = li.querySelectorAll(".addToCart");
         addToCartBtn.forEach((btn) => {
           btn.addEventListener("click", (e) => {

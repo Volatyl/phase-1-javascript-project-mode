@@ -1,3 +1,4 @@
+/* Initial styling */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -32,6 +33,8 @@ title {
 #productsContainer {
   width: 60%;
 }
+
+/* cart styling */
 .cart {
   width: 40%;
   background-color: antiquewhite;
@@ -51,6 +54,7 @@ title {
   justify-content: space-between;
   border-top: 2px solid black;
 }
+/* product styling */
 #products {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -86,6 +90,3 @@ title {
   background-color: rgb(37, 37, 37);
   color: white;
 }
-
-
-
