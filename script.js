@@ -9,15 +9,7 @@ const searchBtn = document.getElementById("searchButton");
 function deleteItemFromServer(itemId) {
   fetch(`http://localhost:3000/products/${itemId}`, {
     method: "DELETE",
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log(`Item ${itemId} deleted from server`);
-      } else {
-        console.error(`Failed to delete item ${itemId} from server`);
-      }
-    })
-    .catch((error) => console.error(error));
+  });
 }
 
 //Function to display all products. Encopanses everything
