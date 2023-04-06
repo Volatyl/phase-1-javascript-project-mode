@@ -1,6 +1,6 @@
 const products = document.getElementById("products");
 const cartItems = document.getElementById("cartItems");
-let total = document.getElementById("totalAmout");
+const total = document.getElementById("totalAmout");
 const searchKeyWord = document.getElementById("searchInput");
 const cart = document.querySelector(".cart");
 const searchBtn = document.getElementById("searchButton");
@@ -60,19 +60,19 @@ function displayProducts(data) {
         `;
 
         cartItems.appendChild(cartItem);
-        const cartItemsList =
-          cartItems.getElementsByClassName("cartItemsContainer");
+
         total.textContent = `Ksh: ${getTotal()}`;
 
         //function to calculate the total of the cart items
         function getTotal() {
-          let total = 0;
-          for (let i = 0; i < cartItemsList.length; i++) {
-            const item = cartItemsList[i];
-            const priceEl = item.querySelector(".price");
-            const price = parseInt(priceEl.textContent.split(":")[1]);
-            total += price;
-          }
+          const cartItemsList =
+            cartItems.getElementsByClassName("cartItemsContainer");
+
+          const total = Array.from(cartItemsList)
+            .map((item) =>
+              parseInt(item.querySelector(".price").textContent.split(":")[1])
+            )
+            .reduce((a, b) => a + b, 0);
           return total;
         }
 
@@ -113,4 +113,20 @@ function filterProducts(category) {
 searchBtn.addEventListener("click", (e) => {
   const category = searchKeyWord.value.toLowerCase();
   filterProducts(category);
+});
+
+//Function to add a new product
+const form = document.getElementById("form");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const newProduct = new FormData(form);
+  const data = Object.fromEntries(newProduct);
+  console.log(data);
+  fetch("http://localhost:3000/products/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 });

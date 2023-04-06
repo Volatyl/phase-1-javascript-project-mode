@@ -139,5 +139,13 @@ title {
 .removeCartItem {
   background-color: rgb(133, 0, 0);
   color: white;
-  padding: 0 1vw;
+  padding: 0 1px;
+}
+
+/* Form input styling */
+.addItem {
+  display: flex;
+  justify-content: left;
+  padding: 5px;
+  gap: 10px;
 }
