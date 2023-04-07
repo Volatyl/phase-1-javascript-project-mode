@@ -23,6 +23,7 @@ function displayProducts(data) {
     </div>
     <p>${product.title}</p>
     <p class="price">Price: Ksh ${product.price}</p>
+    <p class="quantity">SKU: ${product.quantity}</p>
     <p class="addToCart">Add To Cart</p>
     <button class="removeItem">Remove</button>
     </div>
@@ -39,8 +40,10 @@ function displayProducts(data) {
 
     //add items to cart
     const addToCartBtn = li.querySelectorAll(".addToCart");
+    const quantity = li.querySelectorAll(".quantity");
     addToCartBtn.forEach((btn) => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
         const cartItem = document.createElement("div");
         cartItem.innerHTML = `
         <div class="cartItemsContainer">
@@ -52,6 +55,14 @@ function displayProducts(data) {
         `;
 
         cartItems.appendChild(cartItem);
+
+        quantity.forEach((productQuantity) => {
+          const sku = parseInt(productQuantity.textContent.split(" ")[1]);
+          console.log(sku);
+          product.quantity--;
+          updateSku(product);
+          console.log(sku);
+        });
 
         total.textContent = `Ksh: ${getTotal()}`;
 
@@ -122,3 +133,14 @@ form.addEventListener("submit", (e) => {
     body: JSON.stringify(data),
   });
 });
+
+//funciton to change sku
+function updateSku(product) {
+  fetch(`http://localhost:3000/products/${product.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+}
