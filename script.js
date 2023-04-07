@@ -19,9 +19,9 @@ function displayProducts(data) {
     li.classList.add("items");
     li.innerHTML = `<div id="liContainer">
     <div id="imgContainer">
-      <img src="${product.image}"/>
+      <img src="${product.image}" class="image"/>
     </div>
-    <p>${product.title}</p>
+    <p class="itemTitle">${product.title}</p>
     <p class="price">Price: Ksh ${product.price}</p>
     <p class="quantity">SKU: ${product.quantity}</p>
     <p class="addToCart">Add To Cart</p>
@@ -44,49 +44,29 @@ function displayProducts(data) {
     addToCartBtn.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
-        const cartItem = document.createElement("div");
-        cartItem.innerHTML = `
-        <div class="cartItemsContainer">
-          <img src="${product.image}" id="cartItemImage">        
-            <p>${product.title}</p> 
-            <p class="price">Price: ${product.price}</p>        
-          <button class="removeCartItem">Remove</button>
-        </div>
-        `;
+        const productEl = btn.parentElement;
+        console.log(productEl);
 
-        cartItems.appendChild(cartItem);
+        //add item to cart server
 
-        quantity.forEach((productQuantity) => {
-          const sku = parseInt(productQuantity.textContent.split(" ")[1]);
-          console.log(sku);
+        const cartImg = productEl.querySelector(".image").src;
+        const cartItemName = productEl.querySelector(".itemTitle").textContent;
+        const cartItemPrice = productEl
+          .querySelector(".price")
+          .textContent.split(" ")[2];
+
+        const cartData = {
+          image: cartImg,
+          title: cartItemName,
+          price: cartItemPrice,
+        };
+
+        addItemToCartServer(cartData);
+
+        //function to decrease product sku after adding to cart
+        quantity.forEach(() => {
           product.quantity--;
           updateSku(product);
-          console.log(sku);
-        });
-
-        total.textContent = `Ksh: ${getTotal()}`;
-
-        //function to calculate the total of the cart items
-        function getTotal() {
-          const cartItemsList =
-            cartItems.getElementsByClassName("cartItemsContainer");
-
-          const total = Array.from(cartItemsList)
-            .map((item) =>
-              parseInt(item.querySelector(".price").textContent.split(":")[1])
-            )
-            .reduce((a, b) => a + b, 0);
-          return total;
-        }
-
-        // add event listener to removeCartItem button
-        const removeCartItemBtns =
-          cartItems.querySelectorAll(".removeCartItem");
-        removeCartItemBtns.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            btn.parentElement.remove();
-            total.textContent = `Ksh: ${getTotal()}`;
-          });
         });
       });
     });
@@ -96,6 +76,7 @@ function displayProducts(data) {
 //Display all products when the page loads
 window.addEventListener("DOMContentLoaded", () => {
   filterProducts();
+  displayCartItems();
 });
 
 //Function to add search functionality
@@ -142,5 +123,73 @@ function updateSku(product) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(product),
+  });
+}
+
+// function to add item to cart in server
+function addItemToCartServer(cartData) {
+  fetch(`http://localhost:3000/cart`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(cartData),
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error(error));
+}
+
+//function to display cart items from the server
+function displayCartItems() {
+  fetch("http://localhost:3000/cart")
+    .then((res) => res.json())
+    .then((items) => {
+      items.forEach((item) => {
+        const cartItem = document.createElement("div");
+        cartItem.innerHTML = `
+         <div class="cartItemsContainer">
+         <img src="${item.image}" id="cartItemImage">        
+         <p>${item.title}</p> 
+         <p class="price">Price: ${item.price}</p>        
+         <button class="removeCartItem">Remove</button>
+         </div>
+         `;
+
+        cartItems.appendChild(cartItem);
+
+        total.textContent = `Ksh: ${getTotal()}`;
+        // add event listener to removeCartItem button
+        const removeCartItemBtns =
+          cartItems.querySelectorAll(".removeCartItem");
+
+        removeCartItemBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            btn.parentElement.remove();
+            console.log(btn);
+            deleteCartItem(item.id);
+            total.textContent = `Ksh: ${getTotal()}`;
+          });
+        });
+      });
+    });
+}
+
+//function to calculate the total of the cart items
+function getTotal() {
+  const cartItemsList = cartItems.getElementsByClassName("cartItemsContainer");
+
+  const total = Array.from(cartItemsList)
+    .map((item) =>
+      parseInt(item.querySelector(".price").textContent.split(":")[1])
+    )
+    .reduce((a, b) => a + b, 0);
+  return total;
+}
+
+//function to delete cart item
+function deleteCartItem(itemid) {
+  fetch(`http://localhost:3000/cart/${itemid}`, {
+    method: "DELETE",
   });
 }
