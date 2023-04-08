@@ -4,6 +4,7 @@ const total = document.getElementById("totalAmout");
 const searchKeyWord = document.getElementById("searchInput");
 const cart = document.querySelector(".cart");
 const searchBtn = document.getElementById("searchButton");
+const checkOut = document.getElementById("checkOut");
 
 //Function to delete item from server
 function deleteItemFromServer(itemId) {
@@ -159,6 +160,7 @@ function displayCartItems() {
         cartItems.appendChild(cartItem);
 
         total.textContent = `Ksh: ${getTotal()}`;
+
         // add event listener to removeCartItem button
         const removeCartItemBtns =
           cartItems.querySelectorAll(".removeCartItem");
@@ -166,7 +168,6 @@ function displayCartItems() {
         removeCartItemBtns.forEach((btn) => {
           btn.addEventListener("click", () => {
             btn.parentElement.remove();
-            console.log(btn);
             deleteCartItem(item.id);
             total.textContent = `Ksh: ${getTotal()}`;
           });
@@ -193,3 +194,10 @@ function deleteCartItem(itemid) {
     method: "DELETE",
   });
 }
+
+checkOut.addEventListener("click", (e) => {
+  alert("Order confirmed, thank you for your purchase.");
+  for (let i = 0; i < 20; i++) {
+    deleteCartItem(i);
+  }
+});

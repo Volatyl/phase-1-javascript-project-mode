@@ -77,6 +77,11 @@ title {
   justify-content: center;
   cursor: pointer;
 }
+
+#checkOut:hover {
+  background-color: rgb(37, 37, 37);
+  color: white;
+}
 /* product styling */
 #products {
   display: grid;

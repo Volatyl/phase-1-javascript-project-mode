@@ -1,6 +1,6 @@
 ## DUKA STORE
 
-Duka Store is an online e-commerce app that lets you post any goods you want to sell. You can also add buy goods from it. There is a search option to filter all goods by their category.
+Duka Store is an online e-commerce app that lets you post any goods you want to sell. You can also  buy goods from it. There is a search option to filter all goods by their category. You can add goods to the cart and proceed to check out once you're done shopping.
 
 ## INSTALLATION AND RUNNING
 
@@ -12,7 +12,7 @@ If you want to contribute to this project you can clone it and rename it then wo
 
 ## Known issues
 
-The app doesn't proceed after adding the cart items, you can't check out . I'll make sure to work on it.
+The app clears the whole cart when you remove an item form the cart.
 
 ## Buy me a coffee
 
